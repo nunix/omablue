@@ -1,0 +1,9 @@
+[tools]
+"ubi:starship/starship" = "latest"
+"ubi:fastfetch-cli/fastfetch" = "latest"
+"ubi:eza-community/eza" = "latest"
+"ubi:sharkdp/bat" = "latest"
+"ubi:sharkdp/fd" = "latest"
+"ubi:BurntSushi/ripgrep" = "latest"
+"ubi:junegunn/fzf" = "latest"
+"ubi:ajeetdsouza/zoxide" = "latest"

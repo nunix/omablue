@@ -1,11 +1,11 @@
 -- Omarchy Hyprland Base Configuration (Lua for Hyprland 0.56+)
 
--- Monitor setup (Auto-detect default)
+-- Monitor setup (Fixed 1920x1080 @ 1x scale for Hyper-V / standard display)
 hl.monitor({
     output   = "",
-    mode     = "preferred",
+    mode     = "1920x1080@60",
     position = "auto",
-    scale    = "auto",
+    scale    = 1,
 })
 
 -- Core Autostart
@@ -108,17 +108,38 @@ hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "
 hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
 
--- Keybindings
+-- Keybindings (Both SUPER and ALT modifiers for VM & bare metal ergonomics)
 local mainMod = "SUPER"
+local altMod = "ALT"
 
--- Applications
+-- Terminal (SUPER+Q, SUPER+Return, ALT+Return)
 hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("kitty"))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
+hl.bind(altMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
+
+-- Close Window (SUPER+C, ALT+Q, ALT+F4)
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
+hl.bind(altMod .. " + Q", hl.dsp.window.close())
+hl.bind(altMod .. " + F4", hl.dsp.window.close())
+
+-- Exit / Power
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+
+-- File Manager (SUPER+E, ALT+E)
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"))
+hl.bind(altMod .. " + E", hl.dsp.exec_cmd("thunar"))
+
+-- Toggle Floating (SUPER+V, ALT+V)
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(altMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+
+-- App Launcher (SUPER+SPACE, SUPER+R, ALT+SPACE, ALT+D)
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
+hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
+hl.bind(altMod .. " + D", hl.dsp.exec_cmd("rofi -show drun"))
+
+-- Layouts & Lock
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
@@ -140,22 +161,30 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
--- Focus Movement
+-- Focus Movement (SUPER & ALT arrows)
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
 hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
+hl.bind(altMod .. " + left",   hl.dsp.focus({ direction = "left" }))
+hl.bind(altMod .. " + right",  hl.dsp.focus({ direction = "right" }))
+hl.bind(altMod .. " + up",     hl.dsp.focus({ direction = "up" }))
+hl.bind(altMod .. " + down",   hl.dsp.focus({ direction = "down" }))
 
 -- Workspaces 1-10
 for i = 1, 10 do
     local key = i % 10
     hl.bind(mainMod .. " + " .. key,         hl.dsp.focus({ workspace = i }))
+    hl.bind(altMod .. " + " .. key,          hl.dsp.focus({ workspace = i }))
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+    hl.bind(altMod .. " + SHIFT + " .. key,  hl.dsp.window.move({ workspace = i }))
 end
 
 -- Mouse Window Move & Resize
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(),   { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+hl.bind(altMod .. " + mouse:272",  hl.dsp.window.drag(),   { mouse = true })
+hl.bind(altMod .. " + mouse:273",  hl.dsp.window.resize(), { mouse = true })
 
 -- Window rules
 hl.window_rule({

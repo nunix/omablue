@@ -17,7 +17,25 @@ dnf5 install -y \
     playerctl \
     pavucontrol \
     blueman \
-    network-manager-applet || true
+    network-manager-applet \
+    cascadia-code-nf-fonts \
+    cascadia-mono-nf-fonts \
+    jetbrains-mono-fonts-all \
+    tar \
+    xz \
+    curl \
+    wget || true
+
+echo "=== Installing Mise Runtime Manager ==="
+curl -fL https://mise.jdx.dev/mise-latest-linux-x64 -o /usr/bin/mise
+chmod 755 /usr/bin/mise
+
+echo "=== Installing JetBrainsMono Nerd Font ==="
+mkdir -p /usr/share/fonts/JetBrainsMono
+curl -fL https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.tar.xz -o /tmp/JetBrainsMono.tar.xz
+tar -xJf /tmp/JetBrainsMono.tar.xz -C /usr/share/fonts/JetBrainsMono
+rm -f /tmp/JetBrainsMono.tar.xz
+fc-cache -f /usr/share/fonts
 
 echo "=== Enabling System Services ==="
 systemctl enable podman.socket

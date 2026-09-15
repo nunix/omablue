@@ -51,6 +51,41 @@ if [ ! -d /usr/share/omarchy ]; then
     git clone --branch omaweed https://github.com/nunix/omarchy.git /usr/share/omarchy
 fi
 
+# Set Fedora/Bluefin logo icon in the top bar menu widget
+if [ -f /usr/share/omarchy/shell/plugins/menu/BarWidget.qml ]; then
+    cat << 'EOF' > /usr/share/omarchy/shell/plugins/menu/BarWidget.qml
+import QtQuick
+import qs.Ui
+
+BarWidget {
+  id: root
+  moduleName: "omarchy.menu"
+
+  implicitWidth: button.implicitWidth
+  implicitHeight: button.implicitHeight
+
+  WidgetButton {
+    id: button
+    anchors.fill: parent
+    bar: root.bar
+    text: "\uf30a"
+    fontFamily: "JetBrainsMono Nerd Font"
+    horizontalMargin: 7.5
+    onPressed: function(button) {
+      if (!root.bar) return
+      if (button === Qt.RightButton) root.bar.run("xdg-terminal-exec")
+      else root.bar.run("omarchy-menu toggle")
+    }
+  }
+}
+EOF
+fi
+
+# Ensure omarchy-launch-shell exports OMARCHY_PATH
+if [ -f /usr/share/omarchy/bin/omarchy-launch-shell ]; then
+    sed -i 's|run_shell() {|run_shell() {\n  export OMARCHY_PATH="${OMARCHY_PATH:-/usr/share/omarchy}"|g' /usr/share/omarchy/bin/omarchy-launch-shell
+fi
+
 # Set executable permissions on system helper scripts
 chmod 755 /usr/bin/omablue-update /usr/bin/omablue-update-system /usr/bin/uwsm-app /usr/bin/xdg-terminal-exec || true
 

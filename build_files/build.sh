@@ -13,6 +13,8 @@ dnf5 install -y --skip-unavailable \
     zsh \
     distrobox \
     cliphist \
+    wayvnc \
+    neatvnc \
     brightnessctl \
     playerctl \
     pavucontrol \

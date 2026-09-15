@@ -8,6 +8,8 @@ cp -avf "/ctx/system_files"/. /
 echo "=== Installing Omarchy Layer Packages ==="
 dnf5 install -y --skip-unavailable \
     quickshell \
+    qt6-qtimageformats \
+    qt6-qtsvg \
     fastfetch \
     tmux \
     zsh \
@@ -51,6 +53,11 @@ rm -f /tmp/JetBrainsMono.tar.xz
 echo "=== Deploying Omarchy Quattro Core ==="
 if [ ! -d /usr/share/omarchy ]; then
     git clone --branch omaweed https://github.com/nunix/omarchy.git /usr/share/omarchy
+fi
+
+# Fix Background.qml PanelWindow property compatibility
+if [ -f /usr/share/omarchy/shell/plugins/background/Background.qml ]; then
+    sed -i '/updatesEnabled: true/d' /usr/share/omarchy/shell/plugins/background/Background.qml
 fi
 
 # Set Fedora/Bluefin logo icon in the top bar menu widget

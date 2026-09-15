@@ -7,11 +7,10 @@ hl.bind("SUPER + D", hl.dsp.exec_cmd("omarchy-menu toggle apps"), { description 
 hl.bind("ALT + D", hl.dsp.exec_cmd("omarchy-menu toggle apps"), { description = "Apps menu (Alt)" })
 hl.bind("SUPER + R", hl.dsp.exec_cmd("omarchy-menu toggle"), { description = "Run menu" })
 
-hl.bind("SUPER + RETURN", hl.dsp.exec_cmd("xdg-terminal-exec"), { description = "Terminal" })
+-- Alt fallback for Terminal (SUPER + RETURN is provided by Omarchy defaults)
 hl.bind("ALT + RETURN", hl.dsp.exec_cmd("xdg-terminal-exec"), { description = "Terminal (Alt)" })
 
-hl.bind("SUPER + W", hl.dsp.window.close(), { description = "Close window" })
-hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close window" })
+-- Window controls & Alt fallbacks
 hl.bind("ALT + Q", hl.dsp.window.close(), { description = "Close window (Alt)" })
 hl.bind("ALT + F4", hl.dsp.window.close(), { description = "Close window (Alt)" })
 

@@ -6,12 +6,9 @@ set -ouex pipefail
 cp -avf "/ctx/system_files"/. /
 
 echo "=== Installing Omarchy Layer Packages ==="
-dnf5 install -y \
+dnf5 install -y --skip-unavailable \
     quickshell \
-    qt6-declarative \
-    qt6-quickcontrols2 \
     fastfetch \
-    starship \
     tmux \
     zsh \
     distrobox \
@@ -25,11 +22,11 @@ dnf5 install -y \
     cascadia-mono-nf-fonts \
     jetbrains-mono-fonts-all \
     ImageMagick \
-    libvips \
     socat \
     bc \
     jq \
     lua \
+    git \
     tar \
     xz \
     curl \
@@ -55,7 +52,7 @@ if [ ! -d /usr/share/omarchy ]; then
 fi
 
 # Install Omarchy font and symlink binaries
-mkdir -p /usr/share/fonts/omarchy
+mkdir -p /usr/share/fonts/omarchy /usr/local/bin
 if [ -f /usr/share/omarchy/config/omarchy.ttf ]; then
     cp /usr/share/omarchy/config/omarchy.ttf /usr/share/fonts/omarchy/
 fi

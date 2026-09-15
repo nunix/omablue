@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# /usr/bin/omablue-update-system - Convenience wrapper for system updates
+exec /usr/bin/omablue-update --system "$@"

@@ -8,9 +8,9 @@ hl.monitor({
     scale    = 1,
 })
 
--- Core Autostart
+-- Core Autostart (Quickshell Quattro Desktop Shell & Services)
 hl.on("hyprland.start", function ()
-    hl.exec_cmd("waybar")
+    hl.exec_cmd("omarchy-launch-shell || quickshell -n -p /usr/share/omarchy/shell")
     hl.exec_cmd("dunst")
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("hypridle")
@@ -30,6 +30,7 @@ hl.env("CLUTTER_BACKEND", "wayland")
 hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("AQ_NO_MODIFIERS", "1")
 hl.env("WLR_NO_HARDWARE_CURSORS", "1")
+hl.env("OMARCHY_PATH", "/usr/share/omarchy")
 
 -- General Layout & Styling
 hl.config({
@@ -133,11 +134,20 @@ hl.bind(altMod .. " + E", hl.dsp.exec_cmd("thunar"))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(altMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 
--- App Launcher (SUPER+SPACE, SUPER+R, ALT+SPACE, ALT+D)
-hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
-hl.bind(altMod .. " + D", hl.dsp.exec_cmd("rofi -show drun"))
+-- Omarchy Menu & App Launcher (SUPER+SPACE, SUPER+ESCAPE, ALT+SPACE, ALT+D)
+hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("omarchy-menu || rofi -show drun"))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd("omarchy-menu || rofi -show drun"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("omarchy-menu || rofi -show drun"))
+hl.bind(altMod .. " + SPACE", hl.dsp.exec_cmd("omarchy-menu || rofi -show drun"))
+hl.bind(altMod .. " + D", hl.dsp.exec_cmd("omarchy-menu || rofi -show drun"))
+
+-- Omarchy Theme Switcher (SUPER+T, ALT+T)
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("omarchy-theme-switcher"))
+hl.bind(altMod .. " + T", hl.dsp.exec_cmd("omarchy-theme-switcher"))
+
+-- Omarchy Keybindings Menu (SUPER+K, ALT+K)
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
+hl.bind(altMod .. " + K", hl.dsp.exec_cmd("omarchy-menu-keybindings"))
 
 -- Layouts & Lock
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
@@ -145,7 +155,7 @@ hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 
 -- Screenshots
-hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | wl-copy'))
+hl.bind("Print", hl.dsp.exec_cmd('omarchy-capture-screenshot || grim -g "$(slurp)" - | wl-copy'))
 
 -- Audio & Brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })

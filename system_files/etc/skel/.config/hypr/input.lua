@@ -1,0 +1,2 @@
+-- Omarchy Input Overrides
+-- Defaults are defined in default/hypr/input.lua

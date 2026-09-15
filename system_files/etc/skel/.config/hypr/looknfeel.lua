@@ -1,0 +1,2 @@
+-- Omarchy Look & Feel Overrides
+-- Defaults are defined in default/hypr/looknfeel.lua and active theme

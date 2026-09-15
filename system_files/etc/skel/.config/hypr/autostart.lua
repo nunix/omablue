@@ -1,0 +1,2 @@
+-- Extra user autostart processes
+-- Omarchy core autostart (quickshell, polkit, etc.) runs from default/hypr/autostart.lua

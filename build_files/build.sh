@@ -51,6 +51,9 @@ if [ ! -d /usr/share/omarchy ]; then
     git clone --branch omaweed https://github.com/nunix/omarchy.git /usr/share/omarchy
 fi
 
+# Set executable permissions on system helper scripts
+chmod 755 /usr/bin/omablue-update /usr/bin/omablue-update-system /usr/bin/uwsm-app /usr/bin/xdg-terminal-exec || true
+
 # Install Omarchy font and symlink binaries
 mkdir -p /usr/share/fonts/omarchy /usr/local/bin
 if [ -f /usr/share/omarchy/config/omarchy.ttf ]; then
@@ -70,9 +73,13 @@ if [ -f /usr/bin/omablue-update ]; then
     ln -sf /usr/bin/omablue-update /usr/local/bin/omarchy-update
 fi
 
+# Neutralize any leftover wayblue hyprland fallback defaults
+rm -f /usr/share/hyprland/hyprland.lua /usr/share/hypr/hyprland.lua /etc/skel/.config/hypr/hyprland.conf
+mkdir -p /usr/share/hyprland /usr/share/hypr
+ln -sf /etc/skel/.config/hypr/hyprland.lua /usr/share/hyprland/hyprland.lua
+ln -sf /etc/skel/.config/hypr/hyprland.lua /usr/share/hypr/hyprland.lua
+
 fc-cache -f /usr/share/fonts
 
 echo "=== Enabling System Services ==="
 systemctl enable podman.socket
-
-

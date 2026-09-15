@@ -1,0 +1,11 @@
+#!/bin/bash
+# Fallback terminal launcher for xdg-terminal-exec
+if [ "${1-}" = "--dir" ]; then
+    shift
+    target_dir="${1-}"
+    shift
+    if [ -n "$target_dir" ] && [ -d "$target_dir" ]; then
+        exec kitty --directory "$target_dir" "$@"
+    fi
+fi
+exec kitty "$@"
